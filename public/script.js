@@ -1,4 +1,4 @@
-const socket = io(); // auto-connects to localhost:3000
+const socket = io("https://chat-iesh.onrender.com"); // auto-connects to localhost:3000
 
 document.getElementById("send").onclick = sendMessage;
 document.getElementById("m").addEventListener("keypress", (e) => {
