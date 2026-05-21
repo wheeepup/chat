@@ -35,15 +35,19 @@ app.use(express.static(path.join(__dirname, "public")));
 io.on("connection", async (socket) => {
   console.log("A user connected");
 
-  // Send past messages when user connects
-  const history = await Message.find().sort({ timestamp: 1 });
+  // Load last 50 messages from MongoDB
+  const history = await Message.find()
+    .sort({ timestamp: -1 })   // newest first
+    .limit(50)                 // only last 50
+    .sort({ timestamp: 1 });   // reorder oldest → newest
+
   history.forEach(msg => {
     socket.emit("chat message", { msg: msg.text, isSelf: false });
   });
 
   // Save new messages
   socket.on("chat message", async (msg) => {
-    await Message.create({ text: msg });
+    await Message.create({ text: msg, timestamp: Date.now() });
     socket.emit("chat message", { msg, isSelf: true });
     socket.broadcast.emit("chat message", { msg, isSelf: false });
   });
@@ -52,6 +56,7 @@ io.on("connection", async (socket) => {
     console.log("A user disconnected");
   });
 });
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
