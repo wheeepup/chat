@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+  <body class="dark"> <!-- Night mode default -->
+    <div id="chat-container">
+      <header>
+        <h2>Talk to strangers!</h2>
+        <button id="toggle-theme" title="Toggle Night Mode">🌙</button>
+      </header>
+      <div id="chat-window">
+        <ul id="messages"></ul>
+      </div>
+      <div id="input-box">
+        <input id="m" autocomplete="off" placeholder="Type a message..." />
+        <button id="send">➤</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
